@@ -314,6 +314,44 @@
         }
         .body-text-light { color: rgba(255,255,255,0.65); }
 
+        /* ── READ MORE ── */
+        .read-more-text {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.5s ease;
+        }
+        .read-more-text p {
+            margin-top: 1rem;
+            font-size: 1.03rem;
+            color: var(--gray-600);
+            line-height: 1.78;
+            max-width: 560px;
+        }
+        .btn-read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 1.25rem;
+            background: none;
+            border: none;
+            color: var(--blue);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0;
+            transition: gap 0.2s;
+        }
+        .btn-read-more:hover { gap: 0.65rem; }
+        .btn-read-more svg {
+            width: 16px; height: 16px;
+            stroke: currentColor; fill: none;
+            stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+            transition: transform 0.35s;
+            flex-shrink: 0;
+        }
+        .btn-read-more.open svg { transform: rotate(180deg); }
+
         /* ── ABOUT ── */
         #about { background: var(--white); }
 
@@ -831,6 +869,17 @@
             <h2 class="heading reveal">Specjaliści od automatyki<br>i gospodarki wodnej</h2>
             <p class="body-text reveal">Przedmiotem działalności naszej firmy jest obsługa i automatyzacja procesów związanych z zaopatrzeniem w wodę i odprowadzaniem ścieków. W szczególności zajmujemy się projektowaniem, budową i uruchamianiem układów automatyki hydroforni, stacji uzdatniania oraz przepompowni i oczyszczalni ścieków. Wieloletnie doświadczenie i fachowy personel są gwarancją najwyższej jakości w rozwiązywaniu problemów związanych z tą branżą.</p>
 
+            <div class="read-more-text" id="aboutMore">
+                <p>Traktujemy każdy obiekt indywidualnie dobierając urządzenia, osprzęt i konfigurację wnikliwie analizując jego specyfikę. Uwzględniamy również w tym względzie preferencje inwestora. Daje to w konsekwencji szereg korzyści m.in. oszczędność zużycia energii, znaczne wydłużenie okresów międzynaprawczych i zmniejszenie awaryjności.</p>
+                <p>Współpraca z nami pozwala na wydatne zwiększenie niezawodności eksploatowanych obiektów, a co za tym idzie podniesienie bezpieczeństwa zaopatrzenia ilościowego i jakościowego w wodę. Ponadto zapewnia ochronę środowiska dzięki zwiększeniu niezawodności urządzeń odprowadzających zanieczyszczenia oraz monitorowaniu obiektów za to odpowiedzialnych.</p>
+                <p>Posiadamy szereg referencji, które są dla nas szczególną i cenioną opinią o wykonywanej przez nas pracy. Zabezpieczamy także serwis gwarancyjny, jak i pogwarancyjny zestawów, układów i urządzeń przez nas wykonanych, ale również montowanych przez innych wykonawców. Ponadto świadczymy usługi konserwacyjno-naprawcze w zakresie automatyki, pneumatyki, monitoringu i instalacji elektrycznych w obiektach zarówno branży wodno-ściekowej, jak i w innych – przemysłowych i budownictwa indywidualnego.</p>
+            </div>
+
+            <button class="btn-read-more reveal" id="readMoreBtn" onclick="toggleReadMore()">
+                Czytaj więcej
+                <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+
             <div class="about-stats">
                 <div class="stat-card reveal">
                     <div class="stat-num">200<em>+</em></div>
@@ -1169,6 +1218,16 @@ const revealObs = new IntersectionObserver((entries) => {
 }, { threshold: 0.08 });
 
 revealEls.forEach(el => revealObs.observe(el));
+
+// ── Read more (about) ──
+function toggleReadMore() {
+    const el  = document.getElementById('aboutMore');
+    const btn = document.getElementById('readMoreBtn');
+    const isOpen = btn.classList.contains('open');
+    el.style.maxHeight  = isOpen ? '0' : el.scrollHeight + 'px';
+    btn.classList.toggle('open', !isOpen);
+    btn.childNodes[0].textContent = isOpen ? 'Czytaj więcej ' : 'Zwiń ';
+}
 
 // ── Portfolio gallery ──
 const galleryImgs    = document.querySelectorAll('.gallery-main-img');
